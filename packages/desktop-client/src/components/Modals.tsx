@@ -336,7 +336,7 @@ export function Modals() {
             />
           );
 
-        case 'schedule-link':
+        case 'schedule-links':
           return (
             <ScheduleLink
               key={name}
@@ -350,7 +350,7 @@ export function Modals() {
         case 'schedules-discover':
           return <DiscoverSchedules key={name} />;
 
-        case 'schedule-posts-offline-notification':
+        case 'schedule-link':
           return <PostsOfflineNotification key={name} />;
 
         case 'account-menu':

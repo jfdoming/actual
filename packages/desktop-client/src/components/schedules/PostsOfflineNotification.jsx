@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
+import i18next from 'i18next';
 
 import { popModal } from 'loot-core/client/actions';
 import { send } from 'loot-core/src/platform/client/fetch';
@@ -14,13 +16,21 @@ import { Stack } from '../common/Stack';
 import { Text } from '../common/Text';
 import { DisplayId } from '../util/DisplayId';
 
+const interleaveArrays = (...arrays) =>
+  Array.from(
+    {
+      length: Math.max(...arrays.map(array => array.length)),
+    },
+    (_, i) => arrays.map(array => array[i]),
+  ).flat();
+
 export function PostsOfflineNotification() {
   const { t } = useTranslation();
 
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const payees = (location.state && location.state.payees) || [];
+  const payees = (location.state && location.state.payees) || ['a', 'b'];
 
   async function onPost() {
     await send('schedule/force-run-service');
@@ -33,6 +43,25 @@ export function PostsOfflineNotification() {
     </Text>
   ));
 
+  const placeholders = useMemo(
+    () => Array.from({ length: payees.length }, (_, i) => `<${i}>`),
+    [payees.length],
+  );
+
+  const language = i18next.language;
+  const formatter = useMemo(() => {
+    return new Intl.ListFormat(language, {
+      style: 'long',
+      type: 'conjunction',
+    });
+  }, [language]);
+
+  const i18nPayees = useMemo(() => {
+    const formatted = formatter.format(placeholders);
+    const parts = formatted.split(/<.*?>/g);
+    return interleaveArrays(parts, payeesList);
+  }, [formatter, placeholders, payeesList]);
+
   return (
     <Modal name="schedule-posts-offline-notification">
       {({ state: { close } }) => (
@@ -43,18 +72,10 @@ export function PostsOfflineNotification() {
           />
           <Paragraph>
             <Text>
-              {payees.length > 0
-                ? t(
-                    'The payees {{payeesList, list}} have schedules that are due today.',
-                    { payeesList, count: payees.length },
-                  )
-                : t(
-                    'There are payees that have schedules that are due today.',
-                    { count: payees.length },
-                  )}{' '}
-              <Trans>
-                Usually we automatically post transactions for these, but you
-                are offline or syncing failed. In order to avoid duplicate
+              <Trans count={payees.length}>
+                The payees <span>{i18nPayees}</span> have schedules that are due
+                today. Usually we automatically post transactions for these, but
+                you are offline or syncing failed. In order to avoid duplicate
                 transactions, we let you choose whether or not to create
                 transactions for these schedules.
               </Trans>
