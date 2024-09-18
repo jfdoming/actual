@@ -413,6 +413,52 @@ describe('Rule', () => {
     });
   });
 
+  test('rule with split actions generates errors correctly', () => {
+    const rule = new Rule({
+      conditionsOp: 'and',
+      conditions: [{ op: 'is', field: 'imported_payee', value: 'James' }],
+      actions: [
+        {
+          op: 'set-split-amount',
+          field: 'amount',
+          value: 100,
+          options: { splitIndex: 1, method: 'fixed-amount' },
+        },
+        {
+          op: 'set-split-amount',
+          field: 'amount',
+          value: 100,
+          options: { splitIndex: 2, method: 'fixed-amount' },
+        },
+      ],
+    });
+
+    expect(rule.exec({ imported_payee: 'James', amount: 200 })).toMatchObject({
+      error: null,
+      subtransactions: [{ amount: 100 }, { amount: 100 }],
+    });
+
+    // Too little amount
+    expect(rule.exec({ imported_payee: 'James', amount: 100 })).toMatchObject({
+      error: {
+        difference: -100,
+        type: 'SplitTransactionError',
+        version: 1,
+      },
+      subtransactions: [{ amount: 100 }, { amount: 100 }],
+    });
+
+    // Too much amount
+    expect(rule.exec({ imported_payee: 'James', amount: 300 })).toMatchObject({
+      error: {
+        difference: 100,
+        type: 'SplitTransactionError',
+        version: 1,
+      },
+      subtransactions: [{ amount: 100 }, { amount: 100 }],
+    });
+  });
+
   test('rules are deterministically ranked', () => {
     const rule = (id, conditions) =>
       new Rule({
