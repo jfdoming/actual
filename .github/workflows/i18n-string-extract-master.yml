@@ -1,9 +1,9 @@
 name: Extract and upload i18n strings
 
 on:
-  push:
-    branches:
-      - master
+  schedule:
+    # 4am UTC
+    - cron: "0 4 * * *"
   workflow_dispatch:
 
 jobs:
