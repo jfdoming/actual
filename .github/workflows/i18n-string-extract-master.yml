@@ -1,9 +1,9 @@
 name: Extract and upload i18n strings
 
 on:
-  push:
-    branches:
-      - master
+  schedule:
+    # 4am UTC
+    - cron: "0 4 * * *"
   workflow_dispatch:
 
 jobs:
@@ -27,14 +27,25 @@ jobs:
             --key "${{ secrets.WEBLATE_API_KEY_CI_STRINGS }}" \
             pull \
             actualbudget/actual
-      - uses: actions/checkout@v4
+      - name: Check out main repository
+        uses: actions/checkout@v4
         with:
-          submodules: recursive
+          path: actual
+      - name: Check out translations
+        uses: actions/checkout@v4
+        with:
+          repository: actualbudget/translations
+          path: translations
       - name: Set up environment
-        uses: ./.github/actions/setup
+        uses: ./actual/.github/actions/setup
         with:
-          edge: true # Pull the new translations
+          working-directory: actual
+      - name: Configure Git config
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Generate i18n strings
+        working-directory: actual
         run: |
           yarn generate:i18n
           if [[ ! -f packages/desktop-client/locale/en.json ]]; then
@@ -42,11 +53,9 @@ jobs:
             exit 1
           fi
       - name: Check in new i18n strings
-        working-directory: packages/desktop-client/locale
+        working-directory: translations
         run: |
-          git config --global user.email "dev@actualbudget.org"
-          git config --global user.name "Actual CI"
-          git checkout main
+          cp ../actual/packages/desktop-client/locale/en.json .
           git add .
           if git commit -m "Update source strings"; then
             git push
