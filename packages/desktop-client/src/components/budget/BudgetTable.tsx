@@ -1,9 +1,12 @@
 import React, {
   type ComponentPropsWithoutRef,
   type KeyboardEvent,
+  useMemo,
   useState,
 } from 'react';
 
+import { useSchedules } from 'loot-core/client/data-hooks/schedules';
+import { q } from 'loot-core/shared/query';
 import {
   type CategoryEntity,
   type CategoryGroupEntity,
@@ -78,6 +81,9 @@ export function BudgetTable(props: BudgetTableProps) {
   } = props;
 
   const { grouped: categoryGroups = [] } = useCategories();
+
+  const scheduleQuery = useMemo(() => q('schedules').select('*'), []);
+  const { schedules } = useSchedules({ query: scheduleQuery });
   const [collapsedGroupIds = [], setCollapsedGroupIdsPref] =
     useLocalPref('budget.collapsed');
   const [showHiddenCategories, setShowHiddenCategoriesPef] = useLocalPref(
@@ -86,6 +92,7 @@ export function BudgetTable(props: BudgetTableProps) {
   const [editing, setEditing] = useState<{ id: string; cell: string } | null>(
     null,
   );
+  const [showGoals, setShowGoals] = useState(false);
 
   const onEditMonth = (id: string, month: string) => {
     setEditing(id ? { id, cell: month } : null);
@@ -221,6 +228,10 @@ export function BudgetTable(props: BudgetTableProps) {
     onCollapse(categoryGroups.map(g => g.id));
   };
 
+  const toggleGoals = () => {
+    setShowGoals(!showGoals);
+  };
+
   return (
     <View
       data-testid="budget-table"
@@ -269,6 +280,7 @@ export function BudgetTable(props: BudgetTableProps) {
           toggleHiddenCategories={toggleHiddenCategories}
           expandAllCategories={expandAllCategories}
           collapseAllCategories={collapseAllCategories}
+          toggleGoals={toggleGoals}
         />
         <View
           style={{
@@ -301,6 +313,8 @@ export function BudgetTable(props: BudgetTableProps) {
               onBudgetAction={onBudgetAction}
               onShowActivity={onShowActivity}
               onApplyBudgetTemplatesInGroup={onApplyBudgetTemplatesInGroup}
+              showGoals={showGoals}
+              schedules={schedules}
             />
           </View>
         </View>
