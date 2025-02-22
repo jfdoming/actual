@@ -1,0 +1,27 @@
+name: Tag releases on merge
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # need to explore tags
+          ssh-key: ${{ secrets.MAIN_DEPLOY_KEY }}
+          fetch-depth: 0
+          filter: tree:0
+      - name: Push released tag
+        shell: bash
+        run: |
+          current_version="$(jq -r .version packages/desktop-client/package.json)"
+          last_tagged_version="$(git describe --tags $(git rev-list --tags --max-count=1))"
+          if [ -n "$current_version" ] && [ "v$current_version" != "$last_tagged_version" ]; then
+            echo "Version changed from $last_tagged_version to v$current_version, creating a new release..."
+            git tag "v$current_version"
+            git push origin "v$current_version"
+          else
+            echo "Skipping as version $current_version has not changed."
+          fi
