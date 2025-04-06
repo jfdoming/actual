@@ -103,6 +103,7 @@ export type Modal =
       name: 'simplefin-init';
       options: {
         onSuccess: () => void;
+        reinitReason?: string;
       };
     }
   | {

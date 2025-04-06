@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import React, { useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -28,16 +27,29 @@ type SimpleFinInitialiseModalProps = Extract<
 
 export const SimpleFinInitialiseModal = ({
   onSuccess,
+  reinitReason,
 }: SimpleFinInitialiseModalProps) => {
   const { t } = useTranslation();
   const [token, setToken] = useState('');
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(!reinitReason);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(t('It is required to provide a token.'));
+  const [error, setError] = useState(
+    reinitReason ? (
+      <>
+        <Trans>
+          The server returned the following error while listing accounts:
+        </Trans>{' '}
+        {reinitReason}
+      </>
+    ) : (
+      ''
+    ),
+  );
 
   const onSubmit = async (close: () => void) => {
     if (!token) {
       setIsValid(false);
+      setError(t('It is required to provide a token.'));
       return;
     }
 

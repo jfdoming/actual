@@ -222,22 +222,24 @@ export function FatalError({ error }: FatalErrorProps) {
             <Trans>Restart app</Trans>
           </Button>
         </Paragraph>
-        <Paragraph isLast={true} style={{ fontSize: 11 }}>
-          <Link variant="text" onClick={() => setShowError(state => !state)}>
-            <Trans>Show Error</Trans>
-          </Link>
-          {showError && (
-            <Block
-              style={{
-                marginTop: 5,
-                height: 100,
-                overflow: 'auto',
-              }}
-            >
-              {error.stack}
-            </Block>
-          )}
-        </Paragraph>
+        {error.stack && (
+          <Paragraph isLast={true} style={{ fontSize: 11 }}>
+            <Link variant="text" onClick={() => setShowError(state => !state)}>
+              <Trans>Show Error</Trans>
+            </Link>
+            {showError && (
+              <Block
+                style={{
+                  marginTop: 5,
+                  height: 100,
+                  overflow: 'auto',
+                }}
+              >
+                {error.stack}
+              </Block>
+            )}
+          </Paragraph>
+        )}
       </View>
     </Modal>
   );

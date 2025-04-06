@@ -268,7 +268,7 @@ function invalidToken(res) {
       error_code: 'INVALID_ACCESS_TOKEN',
       status: 'rejected',
       reason:
-        'Invalid SimpleFIN access token.  Reset the token and re-link any broken accounts.',
+        'Invalid SimpleFIN access token. Reset the token and re-link any broken accounts.',
     },
   });
 }

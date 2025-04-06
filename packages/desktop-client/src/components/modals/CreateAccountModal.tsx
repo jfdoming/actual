@@ -132,6 +132,7 @@ export function CreateAccountModal({
           modal: {
             name: 'simplefin-init',
             options: {
+              reinitReason: String(err),
               onSuccess: () => setIsSimpleFinSetupComplete(true),
             },
           },
