@@ -42,7 +42,7 @@ interface SimpleTemplate extends BaseTemplate {
   limit?: { amount: number; hold: boolean };
 }
 
-interface ScheduleTemplate extends BaseTemplate {
+export interface ScheduleTemplate extends BaseTemplate {
   type: 'schedule';
   name: string;
   full?: boolean;
