@@ -111,15 +111,11 @@ jobs:
         run: |
           Install-Module -Name StoreBroker -AcceptLicense -Force -Scope CurrentUser -Verbose
 
-      - name: Download Microsoft Store build
+      - name: Download Microsoft Store artifacts
         uses: actions/download-artifact@v4
         with:
           name: actual-electron-windows-latest-appx
-      - name: Create package archive and metadata
-        shell: powershell
-        run: |-
-          Compress-Archive -Path *.appx -DestinationPath microsoft-store-package.zip
-          New-Item -Path . -Name "submission.json" -ItemType "file" -Value "{}"
+          path: artifacts/
 
       - name: Submit to Microsoft Store
         shell: powershell
@@ -132,10 +128,14 @@ jobs:
           $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ${{ secrets.MICROSOFT_STORE_CLIENT_ID }},$pass
           Set-StoreBrokerAuthentication -TenantId '${{ secrets.MICROSOFT_STORE_TENANT_ID }}' -Credential $cred
 
+          # Zip and create metadata files
+          New-StoreBrokerConfigFile -Path config.json -AppId ${{ secrets.MICROSOFT_STORE_PRODUCT_ID }}
+          New-SubmissionPackage -ConfigPath config.json -AppxPath artifacts/ -OutName submission
+
           # Submit the app
           # See https://github.com/microsoft/StoreBroker/blob/master/Documentation/USAGE.md#the-easy-way
           Update-ApplicationSubmission `
             -AppId ${{ secrets.MICROSOFT_STORE_PRODUCT_ID }} `
             -SubmissionDataPath "submission.json" `
-            -PackagePath "microsoft-store-package.zip" `
+            -PackagePath "submission.zip" `
             -Force
