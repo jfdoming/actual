@@ -100,3 +100,32 @@ jobs:
             !packages/desktop-electron/dist/Actual-windows.exe
             packages/desktop-electron/dist/*.AppImage
             packages/desktop-electron/dist/*.flatpak
+
+  publish-microsoft-store:
+    needs: build
+    runs-on: windows-latest
+    if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
+    steps:
+      - name: Download Windows Store Build
+        uses: actions/download-artifact@v4
+        with:
+          name: actual-electron-windows-appx
+      - uses: microsoft/setup-msstore-cli@v1
+      - name: Configure Microsoft Store credentials
+        run: |-
+          msstore reconfigure \
+            --tenantId ${{ secrets.MICROSOFT_STORE_TENANT_ID }} \
+            --sellerId ${{ secrets.MICROSOFT_STORE_SELLER_ID }} \
+            --clientId ${{ secrets.MICROSOFT_STORE_CLIENT_ID }} \
+            --clientSecret ${{ secrets.MICROSOFT_STORE_CLIENT_SECRET }}
+
+      - name: Publish assets
+        run: |-
+          # msstore currently only uploads packages ending in .msix
+          # .appx files are also valid .msix files, so we rename them
+          # to .msix before uploading
+          for file in *.appx; do
+            new_file="${file%.appx}.msix"
+            mv "$file" "$new_file"
+            msstore publish "$new_file" --appId ${{ secrets.MICROSOFT_STORE_PRODUCT_ID }} --noCommit
+          done
