@@ -106,16 +106,16 @@ jobs:
     runs-on: windows-latest
     if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
     steps:
-      - name: Install Store Broker
+      - name: Install StoreBroker
         shell: powershell
         run: |
           Install-Module -Name StoreBroker -AcceptLicense -Force -Scope CurrentUser -Verbose
 
-      - name: Download Windows Store Build
+      - name: Download Microsoft Store build
         uses: actions/download-artifact@v4
         with:
           name: actual-electron-windows-latest-appx
-      - name: Create package archive
+      - name: Create package archive and metadata
         shell: powershell
         run: Compress-Archive -Path *.appx -DestinationPath microsoft-store-package.zip
 
@@ -134,5 +134,6 @@ jobs:
           # See https://github.com/microsoft/StoreBroker/blob/master/Documentation/USAGE.md#the-easy-way
           Update-ApplicationSubmission `
             -AppId ${{ secrets.MICROSOFT_STORE_PRODUCT_ID }} `
+            -SubmissionDataPath "submission.json" `
             -PackagePath "microsoft-store-package.zip" `
             -Force
