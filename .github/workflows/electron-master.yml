@@ -139,4 +139,5 @@ jobs:
             -SubmissionDataPath "submission.json" `
             -PackagePath "submission.zip" `
             -ReplacePackages `
+            -AutoCommit `
             -Force
