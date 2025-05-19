@@ -117,7 +117,9 @@ jobs:
           name: actual-electron-windows-latest-appx
       - name: Create package archive and metadata
         shell: powershell
-        run: Compress-Archive -Path *.appx -DestinationPath microsoft-store-package.zip
+        run: |-
+          Compress-Archive -Path *.appx -DestinationPath microsoft-store-package.zip
+          New-Item -Path . -Name "submission.json" -ItemType "file" -Value "{}"
 
       - name: Submit to Microsoft Store
         shell: powershell
