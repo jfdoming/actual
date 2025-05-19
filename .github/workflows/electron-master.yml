@@ -128,7 +128,7 @@ jobs:
           Set-StoreBrokerAuthentication -TenantId '${{ secrets.MICROSOFT_STORE_TENANT_ID }}' -Credential $cred
 
           # Zip and create metadata files
-          $artifacts = (Get-ChildItem -Path . -Filter *.appx).Name -join ','
+          $artifacts = (Get-ChildItem -Path . -Filter *.appx).Name -join ', '
           New-StoreBrokerConfigFile -Path "$PWD/config.json" -AppId ${{ secrets.MICROSOFT_STORE_PRODUCT_ID }}
           New-SubmissionPackage -ConfigPath "$PWD/config.json" -AppxPath "$artifacts" -OutName submission
 
