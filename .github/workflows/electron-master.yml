@@ -116,8 +116,8 @@ jobs:
         with:
           name: actual-electron-windows-latest-appx
       - name: Create package archive
-        run: |
-          zip -r microsoft-store-package.zip *.appx
+        shell: powershell
+        run: Compress-Archive -Path *.appx -DestinationPath microsoft-store-package.zip
 
       - name: Submit to Microsoft Store
         shell: powershell
