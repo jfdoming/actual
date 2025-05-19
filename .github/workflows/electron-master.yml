@@ -138,4 +138,5 @@ jobs:
             -AppId ${{ secrets.MICROSOFT_STORE_PRODUCT_ID }} `
             -SubmissionDataPath "submission.json" `
             -PackagePath "submission.zip" `
+            -ReplacePackages `
             -Force
