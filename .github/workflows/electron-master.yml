@@ -130,7 +130,7 @@ jobs:
           # Zip and create metadata files
           $artifacts = Get-ChildItem -Path . -Filter *.appx | Select-Object -ExpandProperty FullName
           New-StoreBrokerConfigFile -Path "$PWD/config.json" -AppId ${{ secrets.MICROSOFT_STORE_PRODUCT_ID }}
-          New-SubmissionPackage -ConfigPath "$PWD/config.json" -AppxPath $artifacts -OutName submission
+          New-SubmissionPackage -ConfigPath "$PWD/config.json" -AppxPath $artifacts -OutPath "$PWD" -OutName submission
 
           # Submit the app
           # See https://github.com/microsoft/StoreBroker/blob/master/Documentation/USAGE.md#the-easy-way
