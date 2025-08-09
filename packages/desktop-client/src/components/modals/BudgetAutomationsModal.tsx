@@ -49,7 +49,7 @@ function BudgetAutomationList({
       ...prev,
       {
         type: 'simple',
-        monthly: 500,
+        monthly: 5,
         directive: 'template',
         priority: 0,
       },

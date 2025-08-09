@@ -60,7 +60,7 @@ const changeType = (
         template: {
           directive: 'template',
           type: 'simple',
-          monthly: 500,
+          monthly: 5,
           priority: 0,
         },
       };
@@ -101,7 +101,7 @@ const changeType = (
         template: {
           directive: 'template',
           type: 'periodic',
-          amount: 500,
+          amount: 5,
           period: {
             period: 'week',
             amount: 1,
