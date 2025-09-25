@@ -15,10 +15,10 @@ import type {
 
 import { setType, type Action } from './actions';
 import { displayTemplateTypes, type ReducerState } from './constants';
+import { CapAutomation } from './editor/CapAutomation';
 import { HistoricalAutomation } from './editor/HistoricalAutomation';
 import { PercentageAutomation } from './editor/PercentageAutomation';
 import { ScheduleAutomation } from './editor/ScheduleAutomation';
-import { SimpleAutomation } from './editor/SimpleAutomation';
 import { WeekAutomation } from './editor/WeekAutomation';
 
 import {
@@ -36,7 +36,14 @@ type BudgetAutomationEditorProps = {
 };
 
 const displayTypeToDescription = {
-  simple: <Trans>Add a fixed amount to this category each month.</Trans>,
+  cap: (
+    <Trans>
+      Set a cap for all budget contributions to this category across all
+      automations, and optionally refill up to the cap. The maximum can be set
+      on a monthly, weekly, or daily basis. For example, a $100 weekly cap would
+      result in a $400 monthly cap ($500 depending on the month).
+    </Trans>
+  ),
   week: (
     <Trans>
       Add a fixed amount to this category for each week in the month. For
@@ -80,9 +87,9 @@ export function BudgetAutomationEditor({
 
   let automationEditor: ReactNode;
   switch (state.displayType) {
-    case 'simple':
+    case 'cap':
       automationEditor = (
-        <SimpleAutomation template={state.template} dispatch={dispatch} />
+        <CapAutomation template={state.template} dispatch={dispatch} />
       );
       break;
     case 'week':

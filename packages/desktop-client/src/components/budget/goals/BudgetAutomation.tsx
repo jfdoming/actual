@@ -28,8 +28,12 @@ type BudgetAutomationProps = {
 
 const DEFAULT_TEMPLATE: Template = {
   directive: 'template',
-  type: 'simple',
-  monthly: 0,
+  type: 'periodic',
+  amount: 0,
+  period: {
+    period: 'month',
+    amount: 1,
+  },
   priority: DEFAULT_PRIORITY,
 };
 

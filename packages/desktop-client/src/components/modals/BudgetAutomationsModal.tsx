@@ -57,8 +57,12 @@ function BudgetAutomationList({
     setAutomations(prev => [
       ...prev,
       {
-        type: 'simple',
-        monthly: 5,
+        type: 'periodic',
+        amount: 5,
+        period: {
+          period: 'month',
+          amount: 5,
+        },
         directive: 'template',
         priority: DEFAULT_PRIORITY,
       },

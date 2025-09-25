@@ -2,15 +2,15 @@ import {
   type AverageTemplate,
   type CopyTemplate,
   type PercentageTemplate,
-  type PeriodicTemplate,
   type ScheduleTemplate,
-  type SimpleTemplate,
+  type PeriodicTemplate,
+  type LimitTemplate,
 } from 'loot-core/types/models/templates';
 
 export const displayTemplateTypes = [
-  ['simple', 'Fixed (monthly)'] as const,
+  ['cap', 'Cap and refill'] as const,
   ['week', 'Fixed (weekly)'] as const,
-  ['schedule', 'Schedule'] as const,
+  ['schedule', 'Existing schedule'] as const,
   ['percentage', 'Percent of category'] as const,
   ['historical', 'Copy past budgets'] as const,
 ];
@@ -19,8 +19,8 @@ export type DisplayTemplateType = (typeof displayTemplateTypes)[number][0];
 
 export type ReducerState =
   | {
-      template: SimpleTemplate;
-      displayType: 'simple';
+      template: LimitTemplate;
+      displayType: 'cap';
     }
   | {
       template: PeriodicTemplate;

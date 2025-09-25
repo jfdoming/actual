@@ -14,10 +14,10 @@ import { theme } from '@actual-app/components/theme';
 import { View } from '@actual-app/components/view';
 
 import { type ReducerState } from './constants';
+import { CapAutomationReadOnly } from './editor/CapAutomationReadOnly';
 import { HistoricalAutomationReadOnly } from './editor/HistoricalAutomationReadOnly';
 import { PercentageAutomationReadOnly } from './editor/PercentageAutomationReadOnly';
 import { ScheduleAutomationReadOnly } from './editor/ScheduleAutomationReadOnly';
-import { SimpleAutomationReadOnly } from './editor/SimpleAutomationReadOnly';
 import { WeekAutomationReadOnly } from './editor/WeekAutomationReadOnly';
 
 type BudgetAutomationReadOnlyProps = {
@@ -43,10 +43,8 @@ export function BudgetAutomationReadOnly({
 
   let automationReadOnly;
   switch (state.displayType) {
-    case 'simple':
-      automationReadOnly = (
-        <SimpleAutomationReadOnly template={state.template} />
-      );
+    case 'cap':
+      automationReadOnly = <CapAutomationReadOnly template={state.template} />;
       break;
     case 'week':
       automationReadOnly = <WeekAutomationReadOnly template={state.template} />;
