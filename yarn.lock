@@ -102,6 +102,7 @@ __metadata:
   dependencies:
     "@actual-app/crdt": "workspace:*"
     "@actual-app/vite-plugin-peggy": "workspace:*"
+    "@capacitor/core": "npm:^7.0.0"
     "@jlongster/sql.js": "npm:^1.6.7"
     "@rschedule/core": "npm:^1.5.0"
     "@rschedule/standard-date-adapter": "npm:^1.5.0"
@@ -224,6 +225,7 @@ __metadata:
     "@actual-app/components": "workspace:*"
     "@actual-app/core": "workspace:*"
     "@babel/core": "npm:^7.29.7"
+    "@capgo/capacitor-updater": "npm:^7.18.8"
     "@codemirror/autocomplete": "npm:^6.20.3"
     "@codemirror/language": "npm:^6.12.3"
     "@codemirror/state": "npm:^6.6.0"
@@ -2101,6 +2103,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@capacitor/core@npm:^7.0.0":
+  version: 7.6.7
+  resolution: "@capacitor/core@npm:7.6.7"
+  dependencies:
+    tslib: "npm:^2.1.0"
+  checksum: 10/68594e58080b92be3034b8209e9401afb52536da540a1b451c75c28274b3bd56c9ea58b859c2146adbaa2e8211e652ecb74764f61052859eafd53369d09b8519
+  languageName: node
+  linkType: hard
+
 "@capacitor/core@npm:^8.0.0":
   version: 8.4.1
   resolution: "@capacitor/core@npm:8.4.1"
@@ -2125,6 +2136,15 @@ __metadata:
   peerDependencies:
     "@capacitor/core": ">=8.0.0"
   checksum: 10/cc2759470b5e2a99007846b296f4df2f5ac0951040a1973834fb0a1a66d80f69c824e0fe948ec470babda21ca343bb98105b402fe265d1e5eb889b052478070b
+  languageName: node
+  linkType: hard
+
+"@capgo/capacitor-updater@npm:^7.18.8":
+  version: 7.50.1
+  resolution: "@capgo/capacitor-updater@npm:7.50.1"
+  peerDependencies:
+    "@capacitor/core": ">=7.0.0"
+  checksum: 10/f3cf998707ee9f1384dff95aa7e75dc53907b2665acad1f46c8563cf71980d19e8c3d1094cb89b04d7adbff0099c7bc7deefb2461cdb65aa404a8b3323045177
   languageName: node
   linkType: hard
 

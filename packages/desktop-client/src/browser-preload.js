@@ -1,5 +1,6 @@
 import { startBrowserBackend } from '@actual-app/core/platform/client/browser-preload';
 import * as Platform from '@actual-app/core/shared/platform';
+import { CapacitorUpdater } from '@capgo/capacitor-updater';
 import { registerSW } from 'virtual:pwa-register';
 
 // oxlint-disable-next-line typescript-paths/absolute-parent-import
@@ -8,6 +9,9 @@ import packageJson from '../package.json';
 import SharedBrowserServerWorker from './shared-browser-server.ts?sharedworker';
 
 const backendWorkerUrl = new URL('./browser-server.js', import.meta.url);
+
+// Mobile app: notify when ready
+void CapacitorUpdater.notifyAppReady();
 
 // This file installs global variables that the app expects.
 // Normally these are already provided by electron, but in a real

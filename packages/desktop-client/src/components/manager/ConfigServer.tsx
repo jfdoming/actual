@@ -12,6 +12,8 @@ import {
   isElectron,
   isNonProductionEnvironment,
 } from '@actual-app/core/shared/environment';
+import * as Platform from '@actual-app/core/shared/platform';
+import { CapacitorUpdater } from '@capgo/capacitor-updater';
 import { css } from '@emotion/css';
 
 import { createBudget } from '#budgetfiles/budgetfilesSlice';
@@ -340,6 +342,15 @@ export function ConfigServer() {
     } else {
       setLoading(false);
       await dispatch(signOut());
+
+      if (Platform.env === 'mobile') {
+        // On mobile we need to check if the server has a different PWA version.
+        await CapacitorUpdater.setCustomId({ customId: httpUrl });
+
+        const updateUrl = `${httpUrl.replace(/\/$/, '')}/mobile/auto-update`;
+        await CapacitorUpdater.setUpdateUrl({ url: updateUrl });
+      }
+
       void navigate('/');
     }
   }
@@ -511,7 +522,7 @@ export function ConfigServer() {
               </Button>
             ) : (
               <>
-                {!isElectron() && (
+                {!isElectron() && Platform.env !== 'mobile' && (
                   <Button
                     variant="bare"
                     style={{
