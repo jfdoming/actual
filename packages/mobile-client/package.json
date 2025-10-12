@@ -13,6 +13,7 @@
     "@capgo/capacitor-updater": "7.18.8"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^7.4.3",
     "@capgo/cli": "^7.17.6"
   },
