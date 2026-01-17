@@ -14,8 +14,8 @@ import { theme } from '@actual-app/components/theme';
 import { View } from '@actual-app/components/view';
 
 import { type ReducerState } from './constants';
-import { CapAutomationReadOnly } from './editor/CapAutomationReadOnly';
 import { HistoricalAutomationReadOnly } from './editor/HistoricalAutomationReadOnly';
+import { LimitAutomationReadOnly } from './editor/LimitAutomationReadOnly';
 import { PercentageAutomationReadOnly } from './editor/PercentageAutomationReadOnly';
 import { ScheduleAutomationReadOnly } from './editor/ScheduleAutomationReadOnly';
 import { WeekAutomationReadOnly } from './editor/WeekAutomationReadOnly';
@@ -44,7 +44,9 @@ export function BudgetAutomationReadOnly({
   let automationReadOnly;
   switch (state.displayType) {
     case 'limit':
-      automationReadOnly = <CapAutomationReadOnly template={state.template} />;
+      automationReadOnly = (
+        <LimitAutomationReadOnly template={state.template} />
+      );
       break;
     case 'week':
       automationReadOnly = <WeekAutomationReadOnly template={state.template} />;

@@ -15,8 +15,8 @@ import type {
 
 import { setType, type Action } from './actions';
 import { displayTemplateTypes, type ReducerState } from './constants';
-import { CapAutomation } from './editor/CapAutomation';
 import { HistoricalAutomation } from './editor/HistoricalAutomation';
+import { LimitAutomation } from './editor/LimitAutomation';
 import { PercentageAutomation } from './editor/PercentageAutomation';
 import { ScheduleAutomation } from './editor/ScheduleAutomation';
 import { WeekAutomation } from './editor/WeekAutomation';
@@ -89,7 +89,7 @@ export function BudgetAutomationEditor({
   switch (state.displayType) {
     case 'limit':
       automationEditor = (
-        <CapAutomation template={state.template} dispatch={dispatch} />
+        <LimitAutomation template={state.template} dispatch={dispatch} />
       );
       break;
     case 'week':
