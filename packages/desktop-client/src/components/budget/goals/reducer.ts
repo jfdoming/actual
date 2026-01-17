@@ -85,7 +85,7 @@ const changeType = (
           period: 'monthly',
           hold: false,
           refill: false,
-          priority: DEFAULT_PRIORITY,
+          priority: null,
         },
       };
     case 'percentage':
