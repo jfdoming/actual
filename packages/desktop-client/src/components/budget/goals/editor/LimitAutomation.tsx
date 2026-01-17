@@ -21,12 +21,15 @@ import { AmountInput } from '@desktop-client/components/util/AmountInput';
 import { useDaysOfWeek } from '@desktop-client/hooks/useDaysOfWeek';
 import { useFormat } from '@desktop-client/hooks/useFormat';
 
-type CapAutomationProps = {
+type LimitAutomationProps = {
   template: LimitTemplate;
   dispatch: (action: Action) => void;
 };
 
-export const CapAutomation = ({ template, dispatch }: CapAutomationProps) => {
+export const LimitAutomation = ({
+  template,
+  dispatch,
+}: LimitAutomationProps) => {
   const { t } = useTranslation();
   const format = useFormat();
   const daysOfWeek = useDaysOfWeek();

@@ -5,13 +5,13 @@ import type { LimitTemplate } from 'loot-core/types/models/templates';
 
 import { useFormat } from '@desktop-client/hooks/useFormat';
 
-type CapAutomationReadOnlyProps = {
+type LimitAutomationReadOnlyProps = {
   template: LimitTemplate;
 };
 
-export const CapAutomationReadOnly = ({
+export const LimitAutomationReadOnly = ({
   template,
-}: CapAutomationReadOnlyProps) => {
+}: LimitAutomationReadOnlyProps) => {
   const format = useFormat();
 
   const period = template.period;
