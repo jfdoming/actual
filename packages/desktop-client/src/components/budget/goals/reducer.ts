@@ -50,7 +50,7 @@ export const getInitialState = (template: Template | null): ReducerState => {
     case 'limit':
       return {
         template,
-        displayType: 'cap',
+        displayType: 'limit',
       };
     case 'average':
     case 'copy':
@@ -72,7 +72,7 @@ const changeType = (
   visualType: DisplayTemplateType,
 ): ReducerState => {
   switch (visualType) {
-    case 'cap':
+    case 'limit':
       if (prevState.template.type === 'limit') {
         return prevState;
       }

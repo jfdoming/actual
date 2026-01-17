@@ -123,8 +123,8 @@ export const CapAutomation = ({ template, dispatch }: CapAutomationProps) => {
               dispatch(updateTemplate({ type: 'limit', hold: value }))
             }
             options={[
-              [false, t('Remove all funds over the cap')],
-              [true, t('Retain any funds over the cap')],
+              [false, t('Remove all funds over the limit')],
+              [true, t('Retain any funds over the limit')],
             ]}
             className={selectButtonClassName}
           />

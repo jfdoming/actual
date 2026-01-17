@@ -36,7 +36,7 @@ type BudgetAutomationEditorProps = {
 };
 
 const displayTypeToDescription = {
-  cap: (
+  limit: (
     <Trans>
       Set a cap for all budget contributions to this category across all
       automations, and optionally refill up to the cap. The maximum can be set
@@ -87,7 +87,7 @@ export function BudgetAutomationEditor({
 
   let automationEditor: ReactNode;
   switch (state.displayType) {
-    case 'cap':
+    case 'limit':
       automationEditor = (
         <CapAutomation template={state.template} dispatch={dispatch} />
       );

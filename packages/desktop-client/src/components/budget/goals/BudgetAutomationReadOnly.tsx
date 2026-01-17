@@ -43,7 +43,7 @@ export function BudgetAutomationReadOnly({
 
   let automationReadOnly;
   switch (state.displayType) {
-    case 'cap':
+    case 'limit':
       automationReadOnly = <CapAutomationReadOnly template={state.template} />;
       break;
     case 'week':
