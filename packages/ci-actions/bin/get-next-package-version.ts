@@ -6,9 +6,8 @@
 import fs from 'node:fs';
 import { parseArgs } from 'node:util';
 
-import { getNextVersion } from '../src/versions/get-next-package-version.js';
-
-const args = process.argv;
+import { getNextVersion } from '../src/versions/get-next-package-version';
+import type { VersionType } from '../src/versions/get-next-package-version';
 
 const options = {
   'package-json': {
@@ -16,7 +15,7 @@ const options = {
     short: 'p',
   },
   type: {
-    type: 'string', // nightly, hotfix, monthly, auto
+    type: 'string',
     short: 't',
   },
   version: {
@@ -28,40 +27,50 @@ const options = {
     short: 'u',
     default: false,
   },
-};
+} as const;
+
+function fail(message: string): never {
+  console.error(message);
+  process.exit(1);
+}
 
 const { values } = parseArgs({
-  args,
   options,
   allowPositionals: true,
 });
 
-if (!values['package-json']) {
-  console.error(
+const packageJsonPath = values['package-json'];
+if (!packageJsonPath) {
+  fail(
     'Please specify the path to package.json using --package-json or -p option.',
   );
-  process.exit(1);
 }
 
 try {
-  const packageJsonPath = values['package-json'];
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8')) as {
+    version: string;
+  };
   const currentVersion = packageJson.version;
 
   const explicitVersion = values.version;
   let newVersion;
+
   if (explicitVersion) {
     newVersion = explicitVersion;
   } else {
+    const type = values.type;
+    if (!type) {
+      fail('Please specify the release type using --type or -t.');
+    }
+
     try {
       newVersion = getNextVersion({
         currentVersion,
-        type: values.type,
+        type: type as VersionType,
         currentDate: new Date(),
       });
-    } catch (e) {
-      console.error(e.message);
-      process.exit(1);
+    } catch (error) {
+      fail(error instanceof Error ? error.message : String(error));
     }
   }
 
@@ -76,6 +85,5 @@ try {
     );
   }
 } catch (error) {
-  console.error('Error:', error.message);
-  process.exit(1);
+  fail(`Error: ${error instanceof Error ? error.message : String(error)}`);
 }
