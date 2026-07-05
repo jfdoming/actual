@@ -156,7 +156,7 @@ jobs:
           name: actual-web
           path: packages/desktop-client/build
       - name: Build Mobile client
-        run: ./bin/package-mobile
+        run: yarn build:mobile
       - name: Build Server
         run: yarn workspace @actual-app/sync-server build
       - name: Upload Build
