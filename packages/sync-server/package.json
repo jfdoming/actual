@@ -79,7 +79,7 @@
     "build": "vite build && yarn copy-mobile-assets",
     "typecheck": "tsgo -b && tsc-strict",
     "test": "NODE_ENV=test NODE_OPTIONS='--experimental-vm-modules --trace-warnings' vitest --run",
-    "copy-mobile-assets": "./bin/copy-static-assets",
+    "copy-mobile-assets": "./bin/copy-mobile-assets",
     "db:migrate": "yarn build && cross-env NODE_ENV=development node build/scripts/run-migrations.js up",
     "db:downgrade": "yarn build && cross-env NODE_ENV=development node build/scripts/run-migrations.js down",
     "db:test-migrate": "yarn build && cross-env NODE_ENV=test node build/scripts/run-migrations.js up",
