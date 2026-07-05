@@ -64,7 +64,7 @@ jobs:
           yarn workspace @actual-app/sync-server pack --filename @actual-app/sync-server.tgz
 
       - name: Build API
-        run: NODE_ENV=production yarn build:api
+        run: yarn build:api
 
       - name: Pack the api package
         run: |
