@@ -76,10 +76,9 @@
   "scripts": {
     "start": "yarn build && node build/app.js",
     "start-monitor": "nodemon --exec 'yarn build && node build/app.js' --ignore './build/**/*' --ext 'ts,js' build/app.js",
-    "build": "vite build && yarn copy-mobile-assets",
+    "build": "vite build",
     "typecheck": "tsgo -b && tsc-strict",
     "test": "NODE_ENV=test NODE_OPTIONS='--experimental-vm-modules --trace-warnings' vitest --run",
-    "copy-mobile-assets": "./bin/copy-mobile-assets",
     "db:migrate": "yarn build && cross-env NODE_ENV=development node build/scripts/run-migrations.js up",
     "db:downgrade": "yarn build && cross-env NODE_ENV=development node build/scripts/run-migrations.js down",
     "db:test-migrate": "yarn build && cross-env NODE_ENV=test node build/scripts/run-migrations.js up",

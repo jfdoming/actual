@@ -56,7 +56,7 @@ jobs:
           yarn workspace @actual-app/core pack --filename @actual-app/core.tgz
 
       - name: Build Server & Web
-        run: NODE_ENV=production yarn build:server
+        run: yarn build:server
 
       - name: Pack the web and server packages
         run: |

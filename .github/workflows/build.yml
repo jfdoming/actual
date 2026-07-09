@@ -113,6 +113,23 @@ jobs:
           name: build-stats
           path: packages/desktop-client/build-stats
 
+  mobile:
+    needs: setup
+    runs-on: depot-ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Set up environment
+        uses: ./.github/actions/setup
+      - name: Build Mobile Bundle
+        run: yarn build:mobile-bundle
+      - name: Upload Build
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: actual-mobile
+          path: packages/mobile-client/build
+
   cli:
     needs: setup
     runs-on: depot-ubuntu-latest
@@ -142,7 +159,7 @@ jobs:
           path: cli-stats.json
 
   server:
-    needs: web
+    needs: setup
     runs-on: depot-ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -150,13 +167,8 @@ jobs:
           persist-credentials: false
       - name: Set up environment
         uses: ./.github/actions/setup
-      - name: Download Web Build
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: actual-web
-          path: packages/desktop-client/build
-      - name: Build Mobile client
-        run: yarn build:mobile-bundle
+          download-translations: 'false'
       - name: Build Server
         run: yarn workspace @actual-app/sync-server build
       - name: Upload Build
