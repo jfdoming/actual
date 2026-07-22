@@ -1,12 +1,12 @@
 PODS:
   - Alamofire (5.10.2)
   - BigInt (5.2.0)
-  - Capacitor (8.4.1):
+  - Capacitor (8.4.2):
     - CapacitorCordova
-  - CapacitorCordova (8.4.1)
-  - CapacitorSplashScreen (8.0.1):
+  - CapacitorCordova (8.4.2)
+  - CapacitorSplashScreen (8.0.2):
     - Capacitor
-  - CapgoCapacitorUpdater (8.50.1):
+  - CapgoCapacitorUpdater (8.51.2):
     - Alamofire (= 5.10.2)
     - BigInt (= 5.2.0)
     - Capacitor
@@ -41,10 +41,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
   BigInt: f668a80089607f521586bbe29513d708491ef2f7
-  Capacitor: 35242afe195b1e53c58ca1b827d1b444c5e6602b
-  CapacitorCordova: eebe6bcf807b1b06f3f48237650f96bbcd0eef09
-  CapacitorSplashScreen: 4b46c72298db552b3c57ce021ef028b6dc7f1fa7
-  CapgoCapacitorUpdater: 212d236be95975d5d83e4154f94032e0b27f6ebb
+  Capacitor: 52f999235b8bd6a7d01694753f4f4d54d182e3a3
+  CapacitorCordova: 345eacdc4c8282415446aea4acd8c77d82480bd4
+  CapacitorSplashScreen: 7bf61c2001557ff9e195e601c6b87344480d3c65
+  CapgoCapacitorUpdater: a820667b6970b4b0a74590cade4483525ec2a28e
   Version: de5907f2c5d0f3cf21708db7801d1d5401139486
   ZIPFoundation: dfd3d681c4053ff7e2f7350bc4e53b5dba3f5351
 

@@ -10,8 +10,8 @@
     "build:android": "cap sync android",
     "build:bundle": "yarn workspace @actual-app/web build:browser && ./bin/create-bundle",
     "build": "yarn build:bundle && yarn build:ios && yarn build:android",
-    "start:ios": "yarn build:ios && cap run ios",
-    "start:android": "yarn build:android && cap run android"
+    "start:ios": "yarn build:ios && cap run ios --live-reload --port 3001",
+    "start:android": "yarn build:android && cap run android --live-reload --port 3001"
   },
   "dependencies": {
     "@capacitor/android": "^8.4.2",
