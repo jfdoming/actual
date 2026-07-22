@@ -114,8 +114,8 @@ jobs:
           path: packages/desktop-client/build-stats
 
   mobile:
-    needs: web
-    runs-on: depot-ubuntu-latest
+    needs: setup
+    runs-on: depot-macos-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
