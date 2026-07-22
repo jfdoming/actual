@@ -20097,6 +20097,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "mobile-client@workspace:packages/mobile-client"
   dependencies:
+    "@actual-app/web": "workspace:*"
     "@capacitor/android": "npm:^8.4.2"
     "@capacitor/cli": "npm:^8.4.2"
     "@capacitor/core": "npm:^8.4.2"

@@ -122,7 +122,7 @@ jobs:
           persist-credentials: false
       - name: Set up environment
         uses: ./.github/actions/setup
-      - name: Build Mobile Bundle
+      - name: Build Mobile Apps
         run: yarn build:mobile
       - name: Upload Build
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

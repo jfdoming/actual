@@ -1,9 +1,16 @@
+import path from 'node:path';
+
 import type { CapacitorConfig } from '@capacitor/cli';
+
+const actualAppWebBuildPath = path.join(
+  path.dirname(require.resolve('@actual-app/web/package.json')),
+  'build',
+);
 
 const baseConfig: CapacitorConfig = {
   appId: 'org.actualbudget',
   appName: 'Actual Budget',
-  webDir: '../desktop-client/build',
+  webDir: actualAppWebBuildPath,
   plugins: {
     SplashScreen: {
       launchAutoHide: false,
