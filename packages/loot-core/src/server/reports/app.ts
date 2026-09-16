@@ -29,6 +29,8 @@ export const reportModel = {
   },
 
   toJS(row: CustomReportData): CustomReportEntity {
+    const { tagScope, ...metadata } = row.metadata ?? {};
+
     return {
       id: row.id,
       name: row.name ?? '',
@@ -38,6 +40,7 @@ export const reportModel = {
       dateRange: row.date_range,
       mode: row.mode,
       groupBy: row.group_by,
+      tagScope,
       sortBy: row.sort_by,
       interval: row.interval,
       balanceType: row.balance_type,
@@ -51,7 +54,7 @@ export const reportModel = {
       graphType: row.graph_type,
       conditions: row.conditions ?? [],
       conditionsOp: row.conditions_op ?? 'and',
-      metadata: row.metadata,
+      metadata,
     };
   },
 
@@ -78,6 +81,7 @@ export const reportModel = {
       graph_type: report.graphType,
       conditions: report.conditions,
       conditions_op: report.conditionsOp,
+      metadata: { ...report.metadata, tagScope: report.tagScope },
     };
   },
 };
